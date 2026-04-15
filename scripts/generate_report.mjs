@@ -3,7 +3,7 @@ import { parseArgs } from "node:util";
 import { dirname } from "node:path";
 
 const API_BASE = process.env.ZHIPU_API_BASE ?? "https://open.bigmodel.cn/api/coding/paas/v4";
-const MODEL_NAME = process.env.ZHIPU_MODEL ?? "glm-5.1";
+const MODEL_NAME = process.env.ZHIPU_MODEL ?? "GLM-5-Turbo";
 
 const SYSTEM_PROMPT = [
   "你是性學、性諮商與性神經科學領域的資深研究員與科學傳播者。你的任務是：",
@@ -69,7 +69,7 @@ ${papersText}
 每篇 paper 的 tags 請從以下選擇：性功能障礙、勃起功能障礙、早洩、女性性功能障礙、性慾低落、性交疼痛、性諮商、性治療、伴侶治療、性神經科學、神經內分泌、睪固酮、催產素、多巴胺、性健康、性滿意度、性教育、LGBTQ+、性少數健康、性權利、性暴力、性成癮、色情內容、跨性別健康、性慾望差異、陰道痙攣、更年期性健康、性復健、身心醫學、公共衛生。
 記住：回傳純 JSON，不要用 \`\`\`json\`\`\` 包裹。`;
 
-  const modelsToTry = [MODEL_NAME, "glm-4-flash", "glm-4"];
+  const modelsToTry = [MODEL_NAME, "GLM-4.7", "GLM-4.7-Flash"];
 
   for (const model of modelsToTry) {
     for (let attempt = 0; attempt < 3; attempt++) {
