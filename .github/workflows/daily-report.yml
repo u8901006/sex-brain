@@ -63,6 +63,16 @@ jobs:
             echo "No papers found, will generate empty report"
           fi
 
+      - name: Deduplicate against last 7 days
+        run: node scripts/dedup.mjs
+
+      - name: Update papers count after dedup
+        id: dedup
+        run: |
+          COUNT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('papers.json','utf8')).count||0)")
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "Papers after dedup: $COUNT"
+
       - name: Generate report with Zhipu AI
         env:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
@@ -89,5 +99,5 @@ jobs:
         run: |
           echo "### 📄 Sex Brain Daily Report" >> $GITHUB_STEP_SUMMARY
           echo "**Date:** ${{ steps.date.outputs.target }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Papers analyzed:** ${{ steps.papers.outputs.count }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Papers analyzed:** ${{ steps.dedup.outputs.count }}" >> $GITHUB_STEP_SUMMARY
           echo "**Report:** [sex-${{ steps.date.outputs.target }}.html](https://u8901006.github.io/sex-brain/sex-${{ steps.date.outputs.target }}.html)" >> $GITHUB_STEP_SUMMARY
