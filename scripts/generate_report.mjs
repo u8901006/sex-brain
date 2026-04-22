@@ -196,6 +196,7 @@ ${papersText}
         console.error(`[INFO] Trying ${model} (attempt ${attempt + 1})...`);
         const resp = await fetch(`${API_BASE}/chat/completions`, {
           method: "POST",
+          signal: AbortSignal.timeout(120000),
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
