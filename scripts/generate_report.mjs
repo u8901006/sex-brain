@@ -28,6 +28,125 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+function inferTags(paper) {
+  const haystack = `${paper.title ?? ""} ${paper.abstract ?? ""} ${paper.journal ?? ""}`.toLowerCase();
+  const rules = [
+    ["勃起功能障礙", ["erectile dysfunction"]],
+    ["早洩", ["premature ejaculation"]],
+    ["女性性功能障礙", ["female sexual dysfunction"]],
+    ["性慾低落", ["hypoactive sexual desire disorder", "low sexual desire", "libido", "sexual desire"]],
+    ["性交疼痛", ["dyspareunia", "sexual pain"]],
+    ["陰道痙攣", ["vaginismus"]],
+    ["性諮商", ["sexual counseling", "counseling", "psychosexual"]],
+    ["性治療", ["sex therapy", "psychosexual therapy"]],
+    ["伴侶治療", ["couple therapy", "marital therapy", "relationship"]],
+    ["性神經科學", ["sexual neuroscience", "brain", "fmri", "neuro", "reward"]],
+    ["神經內分泌", ["psychoneuroendocrinology", "hormone", "neuroendocr", "estradiol", "progesterone"]],
+    ["睪固酮", ["testosterone"]],
+    ["催產素", ["oxytocin"]],
+    ["多巴胺", ["dopamine"]],
+    ["性健康", ["sexual health", "sexual medicine"]],
+    ["性滿意度", ["sexual satisfaction"]],
+    ["性教育", ["sex education", "sexuality education"]],
+    ["LGBTQ+", ["lgbtq", "sexual minority", "gender identity", "sexual orientation", "queer", "transgender"]],
+    ["性少數健康", ["sexual minority"]],
+    ["性權利", ["sexual rights"]],
+    ["性暴力", ["sexual violence", "sexual abuse", "assault"]],
+    ["性成癮", ["sexual addiction", "compulsive sexual behavior"]],
+    ["色情內容", ["pornography", "pornographic"]],
+    ["跨性別健康", ["transgender"]],
+    ["性慾望差異", ["desire discrepancy"]],
+    ["更年期性健康", ["menopause", "genitourinary syndrome of menopause"]],
+    ["性復健", ["disability", "rehabilitation", "spinal cord injury"]],
+    ["身心醫學", ["psychosocial", "mental health", "psychiatry"]],
+    ["公共衛生", ["public health", "policy", "implementation", "sti", "hiv", "prep"]],
+  ];
+
+  const tags = rules.filter(([, needles]) => needles.some((needle) => haystack.includes(needle))).map(([tag]) => tag);
+  return tags.slice(0, 3).length ? tags.slice(0, 3) : ["性健康"];
+}
+
+function pickEmoji(tags) {
+  const emojiMap = {
+    "勃起功能障礙": "🩺",
+    "早洩": "⏱️",
+    "女性性功能障礙": "🌸",
+    "性慾低落": "💭",
+    "性交疼痛": "🫧",
+    "性諮商": "🗣️",
+    "性治療": "🛋️",
+    "伴侶治療": "💞",
+    "性神經科學": "🧠",
+    "神經內分泌": "🧬",
+    "睪固酮": "🧪",
+    "催產素": "💗",
+    "多巴胺": "⚡",
+    "LGBTQ+": "🏳️‍🌈",
+    "性教育": "📘",
+    "性暴力": "🚨",
+    "跨性別健康": "⚧️",
+    "公共衛生": "🌍",
+  };
+  return tags.map((tag) => emojiMap[tag]).find(Boolean) ?? "📄";
+}
+
+function summarizePaper(paper) {
+  const abstract = (paper.abstract ?? "").replace(/\s+/g, " ").trim();
+  if (!abstract) return "本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。";
+
+  const firstSentence = abstract.split(/(?<=[.!?])\s+/)[0]?.trim() ?? abstract;
+  return firstSentence.length <= 120 ? firstSentence : `${firstSentence.slice(0, 117)}...`;
+}
+
+function buildFallbackAnalysis(papersData, reason) {
+  const papers = papersData.papers ?? [];
+  const enriched = papers.map((paper, index) => {
+    const tags = inferTags(paper);
+    return {
+      rank: index + 1,
+      title_zh: paper.title ?? "",
+      title_en: paper.title ?? "",
+      journal: paper.journal ?? "",
+      summary: summarizePaper(paper),
+      pico: {
+        population: "請見原文摘要",
+        intervention: "請見原文摘要",
+        comparison: "請見原文摘要",
+        outcome: "請見原文摘要",
+      },
+      clinical_utility: index < 5 ? "中" : "低",
+      utility_reason: "AI 分析暫時不可用，請以原文內容為準。",
+      tags,
+      url: paper.url ?? "",
+      emoji: pickEmoji(tags),
+    };
+  });
+
+  const topPicks = enriched.slice(0, Math.min(5, enriched.length)).map((paper, index) => ({
+    ...paper,
+    rank: index + 1,
+  }));
+  const allPapers = enriched.slice(topPicks.length).map(({ rank, pico, utility_reason, ...paper }) => paper);
+
+  const topicDistribution = {};
+  for (const paper of enriched) {
+    for (const tag of paper.tags) {
+      topicDistribution[tag] = (topicDistribution[tag] ?? 0) + 1;
+    }
+  }
+
+  const keywords = [...new Set(enriched.flatMap((paper) => paper.tags))].slice(0, 12);
+
+  return {
+    date: papersData.date ?? taipeiDate(),
+    market_summary: `本頁由系統自動 fallback 產生。原因：${reason}。今日共整理 ${papers.length} 篇近 7 天尚未收錄的文獻，內容以 PubMed 原始標題與摘要為主。`,
+    top_picks: topPicks,
+    all_papers: allPapers,
+    keywords,
+    topic_distribution: topicDistribution,
+  };
+}
+
 async function analyzePapers(apiKey, papersData) {
   const dateStr = papersData.date ?? taipeiDate();
   const paperCount = papersData.count ?? 0;
@@ -378,8 +497,11 @@ async function main() {
   } else {
     analysis = await analyzePapers(apiKey, papersData);
     if (!analysis) {
-      console.error("[ERROR] Analysis failed, cannot generate report");
-      process.exit(1);
+      console.error("[WARN] AI analysis failed, generating fallback report instead");
+      analysis = buildFallbackAnalysis(
+        papersData,
+        "Zhipu API 失敗、被限流、內容過濾，或回傳非合法 JSON",
+      );
     }
   }
 
