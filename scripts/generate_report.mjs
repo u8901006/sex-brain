@@ -147,14 +147,86 @@ function buildFallbackAnalysis(papersData, reason) {
   };
 }
 
+function buildDeterministicPaper(paper, index, utility = "低") {
+  const tags = inferTags(paper);
+  return {
+    pmid: paper.pmid ?? "",
+    title_zh: paper.title ?? "",
+    title_en: paper.title ?? "",
+    journal: paper.journal ?? "",
+    summary: summarizePaper(paper),
+    clinical_utility: utility,
+    tags,
+    url: paper.url ?? "",
+    emoji: pickEmoji(tags),
+  };
+}
+
+function prepareAiCandidates(papers, limit = 12) {
+  return papers.slice(0, limit).map((paper) => ({
+    pmid: paper.pmid ?? "",
+    title: paper.title ?? "",
+    journal: paper.journal ?? "",
+    date: paper.date ?? "",
+    abstract: (paper.abstract ?? "").replace(/\s+/g, " ").trim().slice(0, 700),
+    keywords: (paper.keywords ?? []).slice(0, 8),
+    url: paper.url ?? "",
+  }));
+}
+
+function mergeAiAnalysis(aiResult, papersData) {
+  const allRawPapers = papersData.papers ?? [];
+  const paperByPmid = new Map(allRawPapers.map((paper) => [paper.pmid, paper]));
+  const topPicks = (aiResult.top_picks ?? []).map((pick, index) => {
+    const paper = paperByPmid.get(pick.pmid) ?? {};
+    const tags = pick.tags?.length ? pick.tags : inferTags(paper);
+    return {
+      rank: index + 1,
+      pmid: pick.pmid ?? paper.pmid ?? "",
+      title_zh: pick.title_zh ?? paper.title ?? "",
+      title_en: pick.title_en ?? paper.title ?? "",
+      journal: pick.journal ?? paper.journal ?? "",
+      summary: pick.summary ?? summarizePaper(paper),
+      pico: pick.pico ?? {
+        population: "請見原文摘要",
+        intervention: "請見原文摘要",
+        comparison: "請見原文摘要",
+        outcome: "請見原文摘要",
+      },
+      clinical_utility: pick.clinical_utility ?? "中",
+      utility_reason: pick.utility_reason ?? "",
+      tags,
+      url: pick.url ?? paper.url ?? "",
+      emoji: pick.emoji ?? pickEmoji(tags),
+    };
+  });
+
+  const topPmids = new Set(topPicks.map((paper) => paper.pmid).filter(Boolean));
+  const allPapers = allRawPapers
+    .filter((paper) => !topPmids.has(paper.pmid))
+    .map((paper, index) => buildDeterministicPaper(paper, index, index < 8 ? "中" : "低"));
+
+  return {
+    date: aiResult.date ?? papersData.date ?? taipeiDate(),
+    market_summary:
+      aiResult.market_summary ??
+      `今日共整理 ${allRawPapers.length} 篇近 7 天尚未收錄的文獻，重點已由 AI 篩出精選論文，其餘文獻採系統摘要整理。`,
+    top_picks: topPicks,
+    all_papers: allPapers,
+    keywords: aiResult.keywords ?? [...new Set(topPicks.flatMap((paper) => paper.tags ?? []))].slice(0, 12),
+    topic_distribution: aiResult.topic_distribution ?? {},
+  };
+}
+
 async function analyzePapers(apiKey, papersData) {
   const dateStr = papersData.date ?? taipeiDate();
   const paperCount = papersData.count ?? 0;
-  const papersText = JSON.stringify(papersData.papers ?? [], null, 2);
+  const candidatePapers = prepareAiCandidates(papersData.papers ?? []);
+  const papersText = JSON.stringify(candidatePapers, null, 2);
 
-  const prompt = `以下是 ${dateStr} 從 PubMed 抓取的最新性學、性諮商與性神經科學文獻（共 ${paperCount} 篇）。
+  const prompt = `以下是 ${dateStr} 從 PubMed 抓取的最新性學、性諮商與性神經科學文獻。系統已先選出 ${candidatePapers.length} 篇候選文獻供 AI 精選，完整日報總數為 ${paperCount} 篇。
 
-請進行以下分析，並以 JSON 格式回傳（不要用 markdown code block）：
+請只針對這 ${candidatePapers.length} 篇候選文獻做精選分析，並以 JSON 格式回傳（不要用 markdown code block）：
 
 {
   "date": "${dateStr}",
@@ -162,6 +234,7 @@ async function analyzePapers(apiKey, papersData) {
   "top_picks": [
     {
       "rank": 1,
+      "pmid": "PubMed ID",
       "title_zh": "中文標題",
       "title_en": "English Title",
       "journal": "期刊名",
@@ -174,9 +247,6 @@ async function analyzePapers(apiKey, papersData) {
       "emoji": "相關emoji"
     }
   ],
-  "all_papers": [
-    { "title_zh": "中文標題", "title_en": "English Title", "journal": "期刊名", "summary": "一句話總結", "clinical_utility": "高/中/低", "tags": ["標籤1"], "url": "連結", "emoji": "emoji" }
-  ],
   "keywords": ["關鍵字1", "關鍵字2"],
   "topic_distribution": { "性功能障礙": 3, "性諮商": 2 }
 }
@@ -184,7 +254,7 @@ async function analyzePapers(apiKey, papersData) {
 原始文獻資料：
 ${papersText}
 
-請篩選出最重要的 TOP 5-8 篇論文放入 top_picks（按重要性排序），其餘放入 all_papers。
+請從候選文獻中篩選出最重要的 TOP 5-8 篇論文放入 top_picks（按重要性排序）。
 每篇 paper 的 tags 請從以下選擇：性功能障礙、勃起功能障礙、早洩、女性性功能障礙、性慾低落、性交疼痛、性諮商、性治療、伴侶治療、性神經科學、神經內分泌、睪固酮、催產素、多巴胺、性健康、性滿意度、性教育、LGBTQ+、性少數健康、性權利、性暴力、性成癮、色情內容、跨性別健康、性慾望差異、陰道痙攣、更年期性健康、性復健、身心醫學、公共衛生。
 記住：回傳純 JSON，不要用 \`\`\`json\`\`\` 包裹。`;
 
@@ -209,7 +279,7 @@ ${papersText}
             ],
             temperature: 0.3,
             top_p: 0.9,
-            max_tokens: 8192,
+            max_tokens: 4096,
           }),
         });
 
@@ -241,7 +311,7 @@ ${papersText}
         console.error(
           `[INFO] Analysis complete: ${result.top_picks?.length ?? 0} top picks, ${result.all_papers?.length ?? 0} total`,
         );
-        return result;
+        return mergeAiAnalysis(result, papersData);
       } catch (e) {
         if (e instanceof SyntaxError) {
           console.error(`[WARN] JSON parse failed on attempt ${attempt + 1}: ${e.message}`);
