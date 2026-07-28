@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { parseArgs } from "node:util";
 import { dirname } from "node:path";
 
-const API_BASE = process.env.ZHIPU_API_BASE ?? "https://open.bigmodel.cn/api/coding/paas/v4";
-const MODEL_NAME = process.env.ZHIPU_MODEL ?? "GLM-5-Turbo";
+const API_BASE = "https://integrate.api.nvidia.com/v1";
+const MODELS = ["nvidia/nemotron-3-super-120b-a12b", "nvidia/nemotron-3-nano-30b-a3b"];
 
 const SYSTEM_PROMPT = [
   "你是性學、性諮商與性神經科學領域的資深研究員與科學傳播者。你的任務是：",
@@ -258,7 +258,7 @@ ${papersText}
 每篇 paper 的 tags 請從以下選擇：性功能障礙、勃起功能障礙、早洩、女性性功能障礙、性慾低落、性交疼痛、性諮商、性治療、伴侶治療、性神經科學、神經內分泌、睪固酮、催產素、多巴胺、性健康、性滿意度、性教育、LGBTQ+、性少數健康、性權利、性暴力、性成癮、色情內容、跨性別健康、性慾望差異、陰道痙攣、更年期性健康、性復健、身心醫學、公共衛生。
 記住：回傳純 JSON，不要用 \`\`\`json\`\`\` 包裹。`;
 
-  const modelsToTry = [MODEL_NAME, "GLM-4.7", "GLM-4.7-Flash"];
+  const modelsToTry = MODELS;
 
   for (const model of modelsToTry) {
     for (let attempt = 0; attempt < 3; attempt++) {
@@ -277,9 +277,11 @@ ${papersText}
               { role: "system", content: SYSTEM_PROMPT },
               { role: "user", content: prompt },
             ],
-            temperature: 0.3,
-            top_p: 0.9,
-            max_tokens: 4096,
+            temperature: 1.0,
+            top_p: 0.95,
+            max_tokens: 16384,
+            stream: false,
+            chat_template_kwargs: { enable_thinking: false },
           }),
         });
 
@@ -493,7 +495,7 @@ function generateHtml(analysis) {
       <div class="header-meta">
         <span class="badge badge-date">📅 ${dateDisplay}</span>
         <span class="badge badge-count">📊 ${totalCount} 篇文獻</span>
-        <span class="badge badge-source">Powered by PubMed + Zhipu AI</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA AI</span>
       </div>
     </div>
   </header>
@@ -525,7 +527,7 @@ function generateHtml(analysis) {
   </div>
 
   <footer>
-    <span>資料來源：PubMed · 分析模型：${MODEL_NAME}</span>
+    <span>資料來源：PubMed · 分析模型：${MODELS[0]}</span>
     <span><a href="https://github.com/u8901006/sex-brain">GitHub</a></span>
   </footer>
 </div>
@@ -538,7 +540,7 @@ async function main() {
     options: {
       input: { type: "string" },
       output: { type: "string" },
-      "api-key": { type: "string", default: process.env.ZHIPU_API_KEY ?? "" },
+      "api-key": { type: "string", default: process.env.NVIDIA_API_KEY ?? "" },
     },
     strict: true,
   });
@@ -548,7 +550,7 @@ async function main() {
   const apiKey = values["api-key"];
 
   if (!apiKey) {
-    console.error("[ERROR] No API key provided. Set ZHIPU_API_KEY env var or use --api-key");
+    console.error("[ERROR] No API key provided. Set NVIDIA_API_KEY env var or use --api-key");
     process.exit(1);
   }
 
@@ -571,7 +573,7 @@ async function main() {
       console.error("[WARN] AI analysis failed, generating fallback report instead");
       analysis = buildFallbackAnalysis(
         papersData,
-        "Zhipu API 失敗、被限流、內容過濾，或回傳非合法 JSON",
+        "NVIDIA API 失敗、被限流、內容過濾，或回傳非合法 JSON",
       );
     }
   }

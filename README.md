@@ -11,7 +11,7 @@
 ## 技術架構
 
 - **資料來源**: PubMed E-utilities API
-- **AI 分析**: Zhipu GLM-5.1
+- **AI 分析**: NVIDIA Nemotron 3（主要：nvidia/nemotron-3-super-120b-a12b；備援：nvidia/nemotron-3-nano-30b-a3b）
 - **部署**: GitHub Actions + GitHub Pages
 - **排程**: 每日台北時間 14:00
 
