@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sex Brain · 性學文獻日報 · 2026年8月22日</title>
+<meta name="description" content="2026年8月22日 性學、性諮商、性神經科學文獻日報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #fdf4f0; --surface: #fffaf6; --line: #e8cfc4; --text: #2d1f1a; --muted: #8a6055; --accent: #c44d3f; --accent-soft: #f5d5cf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff5f0 0, var(--bg) 55%, #f0d8cf 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(196,77,63,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(196,77,63,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(80,30,20,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(80,30,20,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(80,30,20,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff5f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(138,96,85,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff5f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(196,77,63,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 100px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #e07060); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-banner { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .banner-link { display: flex; align-items: center; gap: 14px; padding: 18px 24px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(80,30,20,0.04); }
+  .banner-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(80,30,20,0.08); }
+  .banner-icon { font-size: 28px; flex-shrink: 0; }
+  .banner-name { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
+  .banner-arrow { font-size: 18px; color: var(--accent); font-weight: 700; }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 70px; font-size: 11px; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">🧠</div>
+    <div class="header-text">
+      <h1>Sex Brain · 性學文獻日報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年8月22日</span>
+        <span class="badge badge-count">📊 46 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA AI</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 今日文獻趨勢</h2>
+    <p class="summary-text">今日文獻聚焦於性健康與身心互動的多維度探討，涵蓋性功能障礙的新興治療（如陰道激光、顯微板磨）、性創傷與性別不安的關聯，以及神經科學機制（皮質醇、催產素）在行為與情感中的角色，顯示�床與基礎研究雙軌並進的趨勢。</p>
+  </div>
+
+  <div class="section"><div class="section-title"><span class="section-icon">⭐</span>今日精選 TOP Picks</div><div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#1</span>
+    <span class="emoji-icon">🔧</span>
+    <span class="utility-high">高實用性</span>
+  </div>
+  <h3>顯微板磨併結移植修復治療佩羅尼氏症的臨床效果：一項回顧性隊列研究</h3>
+  <p class="journal-source">Sexual medicine · Clinical effect of microscopic plaque grinding combined with graft repair in the treatment of Peyronie's disease: a retrospective cohort study.</p>
+  <p>結合顯微板磨與移植修復的改良手術技術在治療中度至重度佩羅尼氏症時，能有效減少陰莖彎曲並降低勃起功能障礙與陰莖變短的風險，提供較傳統切除術更安全的選擇。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">45名中度至重度佩羅尼氏症患者（彎曲>60度或複合畸形）</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">顯微板磨併高速微磨棒結合自體陰道鞘或牛心膜移植修復</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">未對照（單臂回顧性隊列）</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">陰莖彎曲顯著改善，術後勃起功能障礙與陰莖變短發生率低於傳統手術</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">性功能障礙</span><span class="tag">勃起功能障礙</span><span class="tag">性治療</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620945/" target="_blank">閱讀原文 →</a>
+  </div>
+</div>
+<div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#2</span>
+    <span class="emoji-icon">🪞</span>
+    <span class="utility-high">高實用性</span>
+  </div>
+  <h3>女性生殖器自我形象：預測與相關因子的系統性文獻回顧</h3>
+  <p class="journal-source">Sexual medicine · Female genital self-image: a systematic review of predictive and associated factors.</p>
+  <p>經由47項研究、超過3萬名個體的綜合分析，女性生殖器自我形象與身體形象、性滿意度、性健康行為及避免婦科檢查等因素顯著相關，提醒�床需主動評估此構面以改善性福祉。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">女性（橫斷面與縱向研究）</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">無（觀察性系統回顧）</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">FGSI 正相關於性滿意度、生殖器欣賞及身體肯定；負相關於羞恥、避免親密行為及婦科檢查</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">性滿意度</span><span class="tag">身心醫學</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620973/" target="_blank">閱讀原文 →</a>
+  </div>
+</div>
+<div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#3</span>
+    <span class="emoji-icon">⚧️</span>
+    <span class="utility-high">高實用性</span>
+  </div>
+  <h3>性健康、性別不 congruence 與性虐待倖存者的創傷揭露：大規模橫斷線上調查結果</h3>
+  <p class="journal-source">Sexual medicine · Sexual health, gender incongruence, and trauma disclosure among survivors of sexual abuse: findings from a large cross-sectional online survey.</p>
+  <p>在性虐待倖存者中，性別不 congruence 顯著關聯較低的性健康、較高的性功能障礙與較少的創傷揭露，提示需整合性別肯定與創傷知照的介入模式。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">性虐待倖存者（大規模線上橫斷調查）</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">無（描述性關聯分析）</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">性別不 congruence 與較差的性健康結果、較低創傷揭露率及較高精神症狀負擔相關</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">性少數健康</span><span class="tag">性創傷</span><span class="tag">性諮商</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42621045/" target="_blank">閱讀原文 →</a>
+  </div>
+</div>
+<div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#4</span>
+    <span class="emoji-icon">💡</span>
+    <span class="utility-mid">中實用性</span>
+  </div>
+  <h3>陰道激光療法對更年期泌尿生殖症候群患者性生活品質的影響</h3>
+  <p class="journal-source">Sexual medicine · The effects of vaginal laser therapy on sexual quality of life in patients with genitourinary syndrome of menopause.</p>
+  <p>陰道激光療法可顯著改善更年期婦女的陰道乾燥、疼痛及性功能，提升性生活品質，為非激素性GSM治療提供有效選項。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">更年期泌尿生殖症候群（GSM）患者</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">陰道激光療法</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">未詳細描述（可能為基線或安慰劑）</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">性生活品質、陰道濕潤度及疼痛評分顯著改善</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">更年期性健康</span><span class="tag">性功能障礙</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620952/" target="_blank">閱讀原文 →</a>
+  </div>
+</div>
+<div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#5</span>
+    <span class="emoji-icon">🧠</span>
+    <span class="utility-mid">中實用性</span>
+  </div>
+  <h3>前 cingulate 與前 insular 皮質在利他行為中的角色：催產素的假設機制</h3>
+  <p class="journal-source">Hormones and behavior · Anterior cingulate cortex, anterior insular cortex and altruistic behaviors; a hypothetical role for oxytocin.</p>
+  <p>假設催產素經由調節前 cingulate 與前 insular 皮質活動，促進利他行為，並可能經由 von Economo 神經元介導，連結社會神經科學與親社会行為的生物基礎。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">人類腦部（文獻綜合）</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">無（假設機制）</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">提出催產素在ACC/AI調節利他行為的神經路徑假說</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">催產素</span><span class="tag">身心醫學</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42623778/" target="_blank">閱讀原文 →</a>
+  </div>
+</div>
+<div class="news-card featured">
+  <div class="card-header">
+    <span class="rank-badge">#6</span>
+    <span class="emoji-icon">⚖️</span>
+    <span class="utility-mid">中實用性</span>
+  </div>
+  <h3>不良童年經驗與青春期過渡期皮質醇節律變化：由日常應對與青少年性別調節</h3>
+  <p class="journal-source">Psychoneuroendocrinology · Adverse childhood experiences and prospective changes in diurnal cortisol activity during the transition to adolescence: Moderation by daily coping and adolescent sex.</p>
+  <p>不良童年經驗與青春期皮質醇節律鈍化相關，但主動應對策略可緩解此效應，且調節效應在女青少年中較顯著，揭示壓力生理的可塑性。</p>
+  <div class="pico-grid">
+  <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">316名華裔青少年（33%女性，平均10.79歲）</span></div>
+  <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">無（觀察性縱向）</span></div>
+  <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">低ACE vs 高ACE；高應對 vs 低應對</span></div>
+  <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">高ACE預測皮質醇節律鈍化，但高日常應對緩解此關係，尤在女性中顯著</span></div>
+</div>
+  <div class="card-footer">
+    <span class="tag">神經內分泌</span><span class="tag">性發展</span><span class="tag">性諮商</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42628405/" target="_blank">閱讀原文 →</a>
+  </div>
+</div></div>
+
+  <div class="section"><div class="section-title"><span class="section-icon">📚</span>其他值得關注的文獻</div><div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Adverse childhood experiences and prospective changes in diurnal cortisol activity during the transition to adolescence: Moderation by daily coping and adolescent sex.</h3>
+  <p class="journal-source">Psychoneuroendocrinology</p>
+  <p>PURPOSE: Examining circadian hypothalamic-pituitary-adrenal (HPA) axis activity during adolescence is vital for under...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42628405/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Love-Centered Therapy and the First Story Cycle: A Dyadic Process Model of Implicit Relational Activation, Autonomic Co-Regulation, and Sexual Field Disruption.</h3>
+  <p class="journal-source">Journal of sex & marital therapy</p>
+  <p>Couples often recognize the patterns that keep them stuck long before they become capable of interrupting them.</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">性神經科學</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42627067/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Perinatal depression, maternal thyroid status and fetus/infant health and development: A systematic review.</h3>
+  <p class="journal-source">Psychoneuroendocrinology</p>
+  <p>BACKGROUND: Thyroid hormones are known to influence both maternal depression and child developmental outcomes, while ...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">身心醫學</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42623836/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Anterior cingulate cortex, anterior insular cortex and altruistic behaviors; a hypothetical role for oxytocin.</h3>
+  <p class="journal-source">Hormones and behavior</p>
+  <p>This paper reviews evidence that neurons in the anterior cingulate cortex (ACC) and anterior insular cortex (AI) are ...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">催產素</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42623778/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Attention to Self-Related Face or Attractive Face? Neural Activation and Oscillation Evidence from Orthognathic Patients.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>Attractive faces capture attention.</p>
+  <div class="card-footer">
+    <span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42622928/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🚨</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Sexual health, gender incongruence, and trauma disclosure among survivors of sexual abuse: findings from a large cross-sectional online survey.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">性暴力</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42621045/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">📄</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Buccal mucosa salvage of urethral erosion after inflatable penile prosthesis reimplantation in a kidney transplant recipient.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42621010/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-mid utility-sm">中</span>
+  </div>
+  <h3>Female genital self-image: a systematic review of predictive and associated factors.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>INTRODUCTION: Female genital self-image (FGSI) is a critical component of body image and sexual well-being.</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620973/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">📄</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>The effects of vaginal laser therapy on sexual quality of life in patients with genitourinary syndrome of menopause.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">更年期性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620952/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🩺</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Clinical effect of microscopic plaque grinding combined with graft repair in the treatment of Peyronie's disease: a retrospective cohort study.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>BACKGROUND: Peyronie's disease (PD) causes debilitating penile curvature.</p>
+  <div class="card-footer">
+    <span class="tag">勃起功能障礙</span><span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620945/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🩺</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Response to Letter to the Editor on "Efficacy of Lifestyle Interventions in Treating Erectile Dysfunction: A Systematic Review and Meta-analysis of Randomized Controlled Trials".</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">勃起功能障礙</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620623/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🩺</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Letter to the Editor on "Efficacy of lifestyle interventions in treating erectile dysfunction: a systematic review and meta-analysis of randomized controlled trials": clarifying patient selection and intervention heterogeneity.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">勃起功能障礙</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620606/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>The relationship between erotophobia-erotophilia and decision-making in response to sexual stimuli.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>BACKGROUND: Decision-making (DM) is influenced by the characteristics of the stimuli involved; sexual content is part...</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620562/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">📄</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>The Persistent Genital Arousal Disorder/Genitopelvic Dysesthesia-Hypersexuality Differentiation Screener.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42620555/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Correction: Patient-Reported Outcome Measures Assessing Genital Self-Image: A Systematic Review of Measurement Properties.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>本篇文獻提供最新研究更新，建議直接閱讀原文摘要與全文以掌握研究設計與臨床意義。</p>
+  <div class="card-footer">
+    <span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42618865/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Evaluating PEACHES: Pleasure-Inclusive Implementation Strategies to Enable Healthcare Workers to Address Anal Sex Stigma During HIV Service Encounters.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>Stigma toward anal sex hinders HIV prevention by limiting equitable access to sexual health services.</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42618864/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Pre-travel sexual health advice for international students: exploring awareness, access, barriers, and ways to improve access in Australia.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: Australia is a popular destination for international students.</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42618516/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Changes in sexual behavior among women in studies evaluating the dapivirine vaginal ring for HIV prevention.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: Access to novel HIV prevention technologies often raise concerns of risk compensation.</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42618053/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>ARMED: an Australian cohort retrospective observational study to understand motivations for switching and clinical outcomes of individuals switching to dolutegravir/lamivudine.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: Although clinical trials and real-world studies demonstrate the efficacy and tolerability of dolutegravir...</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42618052/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Night eating in Cushing's disease: Disentangling psychological, sleep, and endocrine contributions.</h3>
+  <p class="journal-source">Psychoneuroendocrinology</p>
+  <p>OBJECTIVE: Cushing's disease (CD) is characterized by chronic exposure to excess cortisol and disruption of circadian...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42617568/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Effects of peripubertal onset of hyperandrogenism on sociosexual behavior of mice modeling polyendocrine metabolic ovarian syndrome.</h3>
+  <p class="journal-source">Hormones and behavior</p>
+  <p>Sex differences in circulating androgens are well-known to organize and activate neural and behavioral sex difference...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">睪固酮</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42612418/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Sexual Activity, Sexual Well-Being, and Associated Factors Among Older Adults: A Systematic Review and Meta-Analysis.</h3>
+  <p class="journal-source">Journal of sex & marital therapy</p>
+  <p>The aim of this systematic review and meta-analysis was to synthesize quantitative evidence on sexuality-related outc...</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42610354/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧬</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>SEXATURN: sexual function of patients with Turner syndrome compared to that of women with premature ovarian insufficiency.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>INTRODUCTION: Reduced sexual activity has been reported in women with Turner syndrome (TS), a chromosomal disorder fr...</p>
+  <div class="card-footer">
+    <span class="tag">神經內分泌</span><span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42610070/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧬</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Validation of the Turkish version of the ANDROTEST for detecting male hypogonadism in patients with sexual dysfunction.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>BACKGROUND: Male hypogonadism is an important endocrine cause of sexual dysfunction, yet symptom-based screening tool...</p>
+  <div class="card-footer">
+    <span class="tag">神經內分泌</span><span class="tag">睪固酮</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42609935/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🗣️</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Rethinking sexual response: are erogenous zones-including nipple stimulation-more than secondary stimuli? A meta-analysis.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>OBJECTIVES: The nipple, a key erogenous zone in female sexual response, is often insufficiently considered in clinica...</p>
+  <div class="card-footer">
+    <span class="tag">性諮商</span><span class="tag">性健康</span><span class="tag">性滿意度</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42609841/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🚨</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Compensatory and Dissociative Coping in Young Adults: A Person-Centered Analysis of Their Associations with Childhood Maltreatment and Problematic Pornography Use.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>Building on the Compensatory-Dissociative Online Gaming model (Giardina et al., 2024a), the current study proposes a ...</p>
+  <div class="card-footer">
+    <span class="tag">性暴力</span><span class="tag">色情內容</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42608626/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>PrEP awareness, barriers and facilitators in Malaysia in the current landscape of new HIV infections: a review.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>Pre-exposure prophylaxis (PrEP) uptake remains low among key populations in Malaysia despite notable improvements in ...</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42608330/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>The New Digital Pandemic: How Uncertainty Drives the Rise of Sextortion.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>The global wave of pandemic-induced uncertainty sparked a rise in online criminal activities, with sextortion emergin...</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42606667/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧬</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Day and night variation of plasma melatonin and glucocorticoids in a subterranean rodent endemic to north-west Argentina in two seasons.</h3>
+  <p class="journal-source">Hormones and behavior</p>
+  <p>Tuco-tucos (Ctenomys coludo) are Neotropical rodents that inhabit the extreme photic environment of the subterranean,...</p>
+  <div class="card-footer">
+    <span class="tag">神經內分泌</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42604612/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🏳️‍🌈</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>A Preregistered, Prospective, Longitudinal Examination of the Impact of Self-Initiated Sexual Orientation Change Efforts on Health and Changes in Sexuality.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>Although sexual orientation change efforts are generally understood to be ineffective and health-undermining, this un...</p>
+  <div class="card-footer">
+    <span class="tag">LGBTQ+</span><span class="tag">性少數健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42603819/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🫧</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Narratives on Sexuality in Vulvodynia and Endometriosis: A Qualitative Study on Italian Couples.</h3>
+  <p class="journal-source">Archives of sexual behavior</p>
+  <p>Although qualitative research on dyspareunia has increased in recent years, most studies have focused on women's indi...</p>
+  <div class="card-footer">
+    <span class="tag">性交疼痛</span><span class="tag">伴侶治療</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42603818/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🩺</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Bridging fibrosis and function: an integrated mechanistic and therapeutic framework for Peyronie's disease and related erectile dysfunction.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>INTRODUCTION: Peyronie's disease (PD) and erectile dysfunction (ED) are prevalent and frequently coexisting male sexu...</p>
+  <div class="card-footer">
+    <span class="tag">勃起功能障礙</span><span class="tag">性諮商</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42592245/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Adolescents' perceived difficulty in accessing sexual and reproductive health services before, during, and after the COVID-19 pandemic.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: The COVID-19 pandemic widely disrupted access to sexual health care but little is known about how these d...</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42575525/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Barriers to care: female university students' distrust and fear of accessing sexual and reproductive health services in Zambia.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: Sexual and reproductive health (SRH) services are widely available in Lusaka, Zambia but use among adoles...</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42575524/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">💞</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Youth experiences and preferences for sexual health education and digital support: a community-based qualitative study.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: Many adolescents rely on digital sources for sexual and reproductive health (SRH) information;&#xa0;yet,&...</p>
+  <div class="card-footer">
+    <span class="tag">伴侶治療</span><span class="tag">性健康</span><span class="tag">LGBTQ+</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42572016/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🩺</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Active Peyronie's disease as an early antifibrotic treatment window: a translational review.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>INTRODUCTION: Peyronie's disease (PD) is an acquired fibrotic disorder of the tunica albuginea that can cause pain, c...</p>
+  <div class="card-footer">
+    <span class="tag">勃起功能障礙</span><span class="tag">性諮商</span><span class="tag">性健康</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42564900/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>"Virginity" and the hymen: knowledge, attitudes, and practices among Swiss health professionals.</h3>
+  <p class="journal-source">Sexual medicine</p>
+  <p>INTRODUCTION: Hymen anatomy and physiology remain poorly understood, even among health-care providers.</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42564895/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Parent-child connectedness and its associations with sexual risk behavior and outcomes among young people: a systematic review and meta-analysis.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>Significant disparities in the sexual and reproductive health of young people persist globally.</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42557224/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🌍</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Uptake of at-home self-collected dried blood spots for HIV, hepatitis C and syphilis screening among M&#x101;ori gay, bisexual and other men who have sex with men in Aotearoa New Zealand: an observational epidemiological study.</h3>
+  <p class="journal-source">Sexual health</p>
+  <p>BACKGROUND: HIV testing is an integral component of prevention, reducing undiagnosed infection and promoting early tr...</p>
+  <div class="card-footer">
+    <span class="tag">性健康</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42557223/" target="_blank">PubMed →</a>
+  </div>
+</div>
+<div class="news-card">
+  <div class="card-header-row">
+    <span class="emoji-sm">🧠</span>
+    <span class="utility-low utility-sm">低</span>
+  </div>
+  <h3>Corticotropin-releasing factor neurotransmission in the insular cortex regulates anxiogenic-like behavior to acute restraint stress: A site-specific study in rats.</h3>
+  <p class="journal-source">Psychoneuroendocrinology</p>
+  <p>The insular cortex (IC) plays a key role in anxiety responses to stress, with functional differences along its rostro...</p>
+  <div class="card-footer">
+    <span class="tag">性神經科學</span><span class="tag">神經內分泌</span><span class="tag">公共衛生</span>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/42546411/" target="_blank">PubMed →</a>
+  </div>
+</div></div>
+
+  <div class="topic-section section"><div class="section-title"><span class="section-icon">📊</span>主題分佈</div><div class="topic-row">
+  <span class="topic-name">性功能障礙</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+  <span class="topic-count">4</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">性健康</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+  <span class="topic-count">3</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">性諮商</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+  <span class="topic-count">3</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">性神經科學</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+  <span class="topic-count">2</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">身心醫學</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+  <span class="topic-count">2</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">性少數健康</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+  <span class="topic-count">1</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">更年期性健康</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+  <span class="topic-count">1</span>
+</div>
+<div class="topic-row">
+  <span class="topic-name">神經內分泌</span>
+  <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+  <span class="topic-count">1</span>
+</div></div>
+
+  <div class="keywords-section section"><div class="section-title"><span class="section-icon">🏷️</span>關鍵字</div><div class="keywords"><span class="keyword">佩羅尼氏症</span><span class="keyword">陰道激光</span><span class="keyword">性別不 congruence</span><span class="keyword">性創傷</span><span class="keyword">催產素</span><span class="keyword">皮質醇</span><span class="keyword">性健康</span></div></div>
+
+  <div class="links-banner">
+    <a href="https://www.leepsyclinic.com/" class="banner-link" target="_blank">
+      <span class="banner-icon">🏥</span>
+      <span class="banner-name">李政洋身心診所首頁</span>
+      <span class="banner-arrow">→</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="banner-link" target="_blank">
+      <span class="banner-icon">📨</span>
+      <span class="banner-name">訂閱電子報</span>
+      <span class="banner-arrow">→</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed · 分析模型：nvidia/nemotron-3-super-120b-a12b</span>
+    <span><a href="https://github.com/u8901006/sex-brain">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
